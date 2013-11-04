@@ -16,11 +16,20 @@ public class lab1Test {
 	}
 
 	@Test
+	public void casoMaisSimplesTest() {
+		assertEquals("um", lab.casoMaisSimples(1));
+		assertEquals("dez", lab.casoMaisSimples(10));
+		assertEquals("zero", lab.casoMaisSimples(0));
+		assertEquals("cinco", lab.casoMaisSimples(5));
+	}
+	
+	@Test
 	public void casoSimplesTest() {
-		assertEquals("um", lab.casoSimples(1));
-		assertEquals("dez", lab.casoSimples(10));
-		assertEquals("zero", lab.casoSimples(0));
-		assertEquals("cinco", lab.casoSimples(5));
+		assertEquals("quinze", lab.casoSimples(15));
+		assertEquals("mil", lab.casoSimples(1000));
+		assertEquals("vinte", lab.casoSimples(20));
+		assertEquals("setenta", lab.casoSimples(70));
+		assertEquals("dezoito", lab.casoSimples(18));
 	}
 
 }
