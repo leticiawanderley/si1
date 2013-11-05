@@ -26,7 +26,7 @@ public class Lab1 {
 		mapa.put(0, "zero");
 		mapa.put(1, "um");
 		mapa.put(2, "dois");
-		mapa.put(3, "trÃªs");
+		mapa.put(3, "três");
 		mapa.put(4, "quatro");
 		mapa.put(5, "cinco");
 		mapa.put(6, "seis");
