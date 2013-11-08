@@ -32,13 +32,13 @@ public class StringParser {
         }
         else if (size == 9){
 			String check = numberList[9] + numberList[8] + numberList[7];
-			result = checkHundredExceptions(size, result, check, numberList) + MILHOES;
+			result += checkHundredExceptions(size, check, numberList) + MILHOES;
 			size = size - 3;
 			result = this.returnExtended(number, size, result);
 		}
 		else if (size == 8){
 			String check = numberList[8] + numberList[7];
-			result = checkDozenExceptions(size, result, check, numberList) + MILHOES;
+			result += checkDozenExceptions(size, check, numberList) + MILHOES;
 			size = size - 2;
 			result = this.returnExtended(number, size, result);
 		}
@@ -51,40 +51,41 @@ public class StringParser {
 			else{
 				result += MILHOES;
 			}
+			size = size - 1;
 			result = this.returnExtended(number, size, result);
 		}
 		else if (size == 6) {
 			String check = numberList[6] + numberList[5] + numberList[4];
-			result = checkHundredExceptions(size, result, check, numberList) + MIL;
+			result += checkHundredExceptions(size, check, numberList) + MIL;
 			size = size - 3;
 			result = this.returnExtended(number, size, result);
 		}
 		else if (size == 5){
 			String check = numberList[5] + numberList[4];
-			result = checkDozenExceptions(size, result, check, numberList) + MIL;
+			result += checkDozenExceptions(size, check, numberList) + MIL;
 			size = size - 2;
 			result = this.returnExtended(number, size, result);
 		}
 		else if (size == 4){
-			if (numberList[4].equals("1")){
-				result += MIL;
-				size--;
+			if (numberList[size].equals("1")){
+				result = MIL;
 			}
-			else{
-				result += unitMap.get(numberList[size--]) + MIL;
+			else {
+				result += unitMap.get(numberList[size]) + MIL;
 			}
+			size = size - 1;
 			result = this.returnExtended(number, size, result);
 		}
 		else if (size == 3){
 			String check = numberList[3] + numberList[2] + numberList[1];
-			result = checkHundredExceptions(size, result, check, numberList);
+			result += checkHundredExceptions(size, check, numberList);
 		}
 		else if (size == 2){
 			String check = numberList[2] + numberList[1];
-			result = checkDozenExceptions(size, result, check, numberList);
+			result += checkDozenExceptions(size, check, numberList);
 		}
 		else if (size == 1){
-			result = unitMap.get(numberList[size--]);
+			result += unitMap.get(numberList[size--]);
 		}
         
         if (result.endsWith(" e ")){
@@ -105,23 +106,25 @@ public class StringParser {
 		return null;
 	}
 	
-	private String checkHundredExceptions(int size, String result, String check, String[] numberList){
+	private String checkHundredExceptions(int size, String check, String[] numberList){
+		String result;
 		if (checkExceptions(check) != null){
-			result += checkExceptions(check);
+			result = checkExceptions(check);
 		}
 		else {
-			result += hundredMap.get(numberList[size--]) + " e "
-					+ checkDozenExceptions(size, result, check.substring(1), numberList);			
+			result = hundredMap.get(numberList[size--]) + " e "
+					+ checkDozenExceptions(size, check.substring(1), numberList);			
 		}
 		return result;
 	}
 	
-	private String checkDozenExceptions(int size, String result, String check, String[] numberList){
+	private String checkDozenExceptions(int size, String check, String[] numberList){
+		String result;
 		if (checkExceptions(check) != null){
-			result += checkExceptions(check);
+			result = checkExceptions(check);
 		}
 		else {				
-			result += dozenMap.get(numberList[size--]) + " e "
+			result = dozenMap.get(numberList[size--]) + " e "
 					+ unitMap.get(numberList[size--]);
 		}
 		return result;

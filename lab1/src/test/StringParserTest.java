@@ -69,7 +69,7 @@ public class StringParserTest {
 	public void variousTest(){
 		assertEquals("quatrocentos mil e duzentos", parser.result(400200));
 		assertEquals("dezoito mil e três", parser.result(18003));
-		assertEquals("vinte e quatro milhões quinhentos e trinta mil e duzentos", parser.result(24530200));		
+		assertEquals("vinte e quatro milhões e quinhentos e trinta mil e duzentos", parser.result(24530200));		
 	}
 
 }
