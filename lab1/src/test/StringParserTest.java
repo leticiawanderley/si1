@@ -59,14 +59,17 @@ public class StringParserTest {
 		assertEquals("cento e um", parser.result(101));
 		assertEquals("quinhentos e sessenta", parser.result(560));
 		assertEquals("oitocentos e dois", parser.result(802));
-		//assertEquals("mil e cinco", parser.result(1005));
-		//assertEquals("dois mil", parser.result(2000));
-		//assertEquals("um milhão", parser.result(1000000));
-		//assertEquals("um bilhão", parser.result(1000000000));
+		assertEquals("mil e cinco", parser.result(1005));
+		assertEquals("dois mil", parser.result(2000));
+		assertEquals("dezessete mil", parser.result(17000));
+		assertEquals("um bilhão", parser.result(1000000000));
 	}
 	
-	public void threeWordsNumbersTest(){
-		
+	@Test
+	public void variousTest(){
+		assertEquals("quatrocentos mil e duzentos", parser.result(400200));
+		assertEquals("dezoito mil e três", parser.result(18003));
+		assertEquals("vinte e quatro milhões quinhentos e trinta mil e duzentos", parser.result(24530200));		
 	}
 
 }

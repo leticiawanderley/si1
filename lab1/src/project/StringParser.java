@@ -9,7 +9,7 @@ public class StringParser {
 	private Map<String, String> hundredMap;
 	private Map<String, String> exceptionMap;
 	private final String MILHOES = " milhões e ";
-	private final String MILHAO = " milhao e ";
+	private final String MILHAO = " milhão e ";
 	private final String MIL = " mil e ";
 	
 	public StringParser(){
@@ -32,44 +32,48 @@ public class StringParser {
         }
         else if (size == 9){
 			String check = numberList[9] + numberList[8] + numberList[7];
-			result += checkHundredExceptions(size, result, check, numberList) + MILHOES;
-			this.returnExtended(number, size, result);
+			result = checkHundredExceptions(size, result, check, numberList) + MILHOES;
+			size = size - 3;
+			result = this.returnExtended(number, size, result);
 		}
 		else if (size == 8){
 			String check = numberList[8] + numberList[7];
-			result += checkDozenExceptions(size, result, check, numberList)+ MILHOES;
-			this.returnExtended(number, size, result);
+			result = checkDozenExceptions(size, result, check, numberList) + MILHOES;
+			size = size - 2;
+			result = this.returnExtended(number, size, result);
 		}
 		
 		else if (size == 7){
-			result += unitMap.get(numberList[size--]);
-			if (numberList[6].equals("1")){
+			result += unitMap.get(numberList[size]);
+			if (numberList[7].equals("1")){
 				result += MILHAO;
 			}
 			else{
 				result += MILHOES;
 			}
-			this.returnExtended(number, size, result);
+			result = this.returnExtended(number, size, result);
 		}
 		else if (size == 6) {
 			String check = numberList[6] + numberList[5] + numberList[4];
-			result += checkHundredExceptions(size, result, check, numberList) + MIL;
-			this.returnExtended(number, size, result);
+			result = checkHundredExceptions(size, result, check, numberList) + MIL;
+			size = size - 3;
+			result = this.returnExtended(number, size, result);
 		}
 		else if (size == 5){
 			String check = numberList[5] + numberList[4];
-			result += checkDozenExceptions(size, result, check, numberList) + MIL;
-			this.returnExtended(number, size, result);
+			result = checkDozenExceptions(size, result, check, numberList) + MIL;
+			size = size - 2;
+			result = this.returnExtended(number, size, result);
 		}
 		else if (size == 4){
 			if (numberList[4].equals("1")){
 				result += MIL;
+				size--;
 			}
 			else{
 				result += unitMap.get(numberList[size--]) + MIL;
 			}
-			size--;
-			this.returnExtended(number, size, result);
+			result = this.returnExtended(number, size, result);
 		}
 		else if (size == 3){
 			String check = numberList[3] + numberList[2] + numberList[1];
@@ -80,9 +84,10 @@ public class StringParser {
 			result = checkDozenExceptions(size, result, check, numberList);
 		}
 		else if (size == 1){
-			result += unitMap.get(numberList[size--]);
+			result = unitMap.get(numberList[size--]);
 		}
-		if (result.endsWith(" e ")){
+        
+        if (result.endsWith(" e ")){
 			result = result.substring(0, result.length() - 2);
 		}
 		return result.trim();
@@ -91,26 +96,6 @@ public class StringParser {
 	public String result(int i){
 		String number = Integer.toString(i);
 		return this.returnExtended(number, number.length(), "");
-	}
-	
-	public boolean verifyInput(String input){
-		 if (input.isEmpty()) {
-             System.out.print("Inserir um número de 0 a 1000000000: ");
-             return false;
-		 }
-		 try {
-			 Integer.parseInt(input);
-		 }
-		 catch (Exception e){
-			 System.out.println("Inserir um número de 0 a 1000000000: ");
-			 return false;
-		 }
-		 if((long)Integer.parseInt(input.trim()) > 1000000000
-				 && (long)Integer.parseInt(input.trim()) < 0){
-             System.out.print("Número iválido. Tente novamente: ");
-             return false;
-		 }
-		 return true;
 	}
 	
 	private String checkExceptions(String number){
@@ -123,7 +108,6 @@ public class StringParser {
 	private String checkHundredExceptions(int size, String result, String check, String[] numberList){
 		if (checkExceptions(check) != null){
 			result += checkExceptions(check);
-			size = size - 3;
 		}
 		else {
 			result += hundredMap.get(numberList[size--]) + " e "
@@ -135,7 +119,6 @@ public class StringParser {
 	private String checkDozenExceptions(int size, String result, String check, String[] numberList){
 		if (checkExceptions(check) != null){
 			result += checkExceptions(check);
-			size = size - 2;
 		}
 		else {				
 			result += dozenMap.get(numberList[size--]) + " e "
@@ -182,6 +165,7 @@ public class StringParser {
 	}
 	
 	private void populeExceptionsMap(Map<String, String> map){
+		map.put("000", "");
 		map.put("001", "um");
 		map.put("002", "dois");
 		map.put("003", "três");
@@ -227,6 +211,26 @@ public class StringParser {
 		map.put("700", "setecentos");
 		map.put("800", "oitocentos");
 		map.put("900", "novecentos");
-		map.put("1000", "mil");
 	}
+	
+	public boolean verifyInput(String input){
+		 if (input.isEmpty()) {
+            System.out.print("Inserir um número de 0 a 1000000000: ");
+            return false;
+		 }
+		 try {
+			 Integer.parseInt(input);
+		 }
+		 catch (Exception e){
+			 System.out.println("Inserir um número de 0 a 1000000000: ");
+			 return false;
+		 }
+		 if((long)Integer.parseInt(input.trim()) > 1000000000
+				 && (long)Integer.parseInt(input.trim()) < 0){
+            System.out.print("Número iválido. Tente novamente: ");
+            return false;
+		 }
+		 return true;
+	}
+	
 }
