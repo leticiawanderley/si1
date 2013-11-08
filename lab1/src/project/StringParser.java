@@ -93,6 +93,26 @@ public class StringParser {
 		return this.returnExtended(number, number.length(), "");
 	}
 	
+	public boolean verifyInput(String input){
+		 if (input.isEmpty()) {
+             System.out.print("Inserir um número de 0 a 1000000000: ");
+             return false;
+		 }
+		 try {
+			 Integer.parseInt(input);
+		 }
+		 catch (Exception e){
+			 System.out.println("Inserir um número de 0 a 1000000000: ");
+			 return false;
+		 }
+		 if((long)Integer.parseInt(input.trim()) > 1000000000
+				 && (long)Integer.parseInt(input.trim()) < 0){
+             System.out.print("Número iválido. Tente novamente: ");
+             return false;
+		 }
+		 return true;
+	}
+	
 	private String checkExceptions(String number){
 		if (exceptionMap.containsKey(number)){
 			return exceptionMap.get(number);
