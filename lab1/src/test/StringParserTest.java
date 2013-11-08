@@ -69,6 +69,9 @@ public class StringParserTest {
 	public void variousTest(){
 		assertEquals("quatrocentos mil e duzentos", parser.result(400200));
 		assertEquals("dezoito mil e três", parser.result(18003));
+		assertEquals("setecentos e noventa e oito", parser.result(798));
+		assertEquals("novecentos e noventa e nove mil e novecentos e noventa", parser.result(999990));
+		assertEquals("trezentos e trinta mil e cento e setenta e quatro", parser.result(330174));		
 		assertEquals("vinte e quatro milhões e quinhentos e trinta mil e duzentos", parser.result(24530200));		
 	}
 

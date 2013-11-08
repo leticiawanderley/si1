@@ -68,7 +68,7 @@ public class StringParser {
 		}
 		else if (size == 4){
 			if (numberList[size].equals("1")){
-				result = MIL;
+				result += MIL;
 			}
 			else {
 				result += unitMap.get(numberList[size]) + MIL;
@@ -144,6 +144,7 @@ public class StringParser {
 	}
 	
 	private void populeDozenMap(Map<String, String> map){
+		map.put("0", "");
 		map.put("1", "dez");
 		map.put("2", "vinte");
 		map.put("3", "trinta");
@@ -156,6 +157,7 @@ public class StringParser {
 	}
 	
 	private void populeHundredMap(Map<String, String> map){
+		map.put("0", "");
 		map.put("1", "cento");
 		map.put("2", "duzentos");
 		map.put("3", "trezentos");
@@ -178,6 +180,7 @@ public class StringParser {
 		map.put("007", "sete");
 		map.put("008", "oito");
 		map.put("009", "nove");
+		map.put("00", "");
 		map.put("01", "um");
 		map.put("02", "dois");
 		map.put("03", "três");
