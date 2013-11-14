@@ -3,15 +3,29 @@ package project;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Classe que escreve os números pro extenso
+ * 
+ * @author Leticia Wanderley
+ */
 public class StringParser {
 	private Map<String, String> unitMap;
+	
 	private Map<String, String> dozenMap;
+	
 	private Map<String, String> hundredMap;
+	
 	private Map<String, String> exceptionMap;
+	
 	private final String MILHOES = " milhões e ";
+	
 	private final String MILHAO = " um milhão e ";
+	
 	private final String MIL = " mil e ";
 	
+	/**
+	 * Construtor da classe
+	 */
 	public StringParser(){
 		unitMap = new HashMap<String, String>();
 		populeUnitMap(unitMap);
@@ -24,6 +38,18 @@ public class StringParser {
 		
 	}
 	
+	/**
+	 * Transformador dos números para extenso
+	 * 
+	 * @param number
+	 * 		Número a ser transformado
+	 * @param size
+	 * 		Tamanho do número
+	 * @param result
+	 * 		Resultado da transformação
+	 * @return
+	 * 		O número por extenso
+	 */
 	private String returnExtended(String number, int size, String result) {
 		String numberReverse = new StringBuffer(number).reverse().toString().trim();
         String[] numberList = numberReverse.split("");
@@ -54,11 +80,35 @@ public class StringParser {
 		return result.trim();
 	}
 	
+	/**
+	 * Método que retorna para o cliente o número por extenso
+	 * @param i
+	 * 		Número inteiro a ser tranformado
+	 * @return
+	 * 		Número por extenso
+	 */
 	public String result(int i){
 		String number = Integer.toString(i);
 		return this.returnExtended(number, number.length(), "");
 	}
 	
+	/**
+	 * Partição do método que transforma os inteiros em número escritos por extenso 
+	 * @param size
+	 * 		Tamanho do número
+	 * @param number
+	 * 		Número a ser transformado
+	 * @param numberList
+	 * 		Número transformado em lista
+	 * @param result
+	 * 		String com o resultado
+	 * @param addend1
+	 * 		String que representa a unidade da partição do número, no singular
+	 * @param addend2
+	 * 		String que representa a casa da partição do número, no plural
+	 * @return
+	 * 		Partição da String do resultado
+	 */
 	private String returnExtendedPart(int size, String number, String[] numberList, String result, String addend1, String addend2){
 		if (size % 3 == 0){
 			String check = numberList[size] + numberList[size - 1] + numberList[size - 2];
@@ -86,6 +136,13 @@ public class StringParser {
 		return result;
 	}
 	
+	/**
+	 * Checa se o número recebido faz parte do mapa de exceções
+	 * @param number
+	 * 		Número 
+	 * @return
+	 * 		A String do número se esta pertence ao map ou null se não pertence
+	 */
 	private String checkExceptions(String number){
 		if (exceptionMap.containsKey(number)){
 			return exceptionMap.get(number);
@@ -93,6 +150,19 @@ public class StringParser {
 		return null;
 	}
 	
+	/**
+	 * Checa se existem exceções nas centenas
+	 * @param size
+	 * 		Tamanho do número
+	 * @param check
+	 * 		Partição do número a ser checada
+	 * @param numberList
+	 * 		Número transformado em lista
+	 * @param addend
+	 * 		String que representa a casa da partição do número
+	 * @return
+	 * 		String da partição recebida
+	 */
 	private String checkHundredExceptions(int size, String check, String[] numberList, String addend){
 		String result;
 		if (check.equals("000")){
@@ -115,6 +185,19 @@ public class StringParser {
 		return result + addend;
 	}
 	
+	/**
+	 * Checa se existem exceções nas dezenas
+	 * @param size
+	 * 		Tamanho do número
+	 * @param check
+	 * 		Partição do número a ser checada
+	 * @param numberList
+	 * 		Número transformado em lista
+	 * @param addend
+	 * 		String que representa a casa da partição do número
+	 * @return
+	 * 		String da partição recebida
+	 */
 	private String checkDozenExceptions(int size, String check, String[] numberList, String addend){
 		String result;
 		if (check.equals("00")){
@@ -137,6 +220,11 @@ public class StringParser {
 		return result + addend;
 	}
 	
+	/**
+	 * Popula mapa com String das unidades
+	 * @param map
+	 * 		Mapa a ser populado
+	 */
 	private void populeUnitMap(Map<String, String> map){
 		map.put("0", "zero");
 		map.put("1", "um");
@@ -150,6 +238,11 @@ public class StringParser {
 		map.put("9", "nove");
 	}
 	
+	/**
+	 * Popula mapa com String das dezenas
+	 * @param map
+	 * 		Mapa a ser populado
+	 */
 	private void populeDozenMap(Map<String, String> map){
 		map.put("0", "");
 		map.put("1", "dez");
@@ -163,6 +256,11 @@ public class StringParser {
 		map.put("9", "noventa");
 	}
 	
+	/**
+	 * Popula mapa com String das centenas
+	 * @param map
+	 * 		Mapa a ser populado
+	 */
 	private void populeHundredMap(Map<String, String> map){
 		map.put("0", "");
 		map.put("1", "cento");
@@ -176,6 +274,11 @@ public class StringParser {
 		map.put("9", "novecentos");
 	}
 	
+	/**
+	 * Popula mapa com String das exceções
+	 * @param map
+	 * 		Mapa a ser populado
+	 */
 	private void populeExceptionsMap(Map<String, String> map){
 		map.put("001", "um");
 		map.put("002", "dois");
@@ -224,6 +327,13 @@ public class StringParser {
 		map.put("900", "novecentos");
 	}
 	
+	/**
+	 * Verifica se o número recebido é válido
+	 * @param input
+	 * 		Número
+	 * @return
+	 * 		true se o número for válido, false caso contrário
+	 */
 	public boolean verifyInput(String input){
 		 if (input.isEmpty()) {
             System.out.print("Inserir um número de 0 a 1000000000: ");
