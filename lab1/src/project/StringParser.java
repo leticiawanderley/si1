@@ -106,7 +106,7 @@ public class StringParser {
 		return null;
 	}
 	
-	private String checkHundredExceptions(int size, String check, String[] numberList, String adend){
+	private String checkHundredExceptions(int size, String check, String[] numberList, String addend){
 		String result;
 		if (check.equals("000")){
 			return "";
@@ -125,10 +125,10 @@ public class StringParser {
 				}
 			}
 		}
-		return result + adend;
+		return result + addend;
 	}
 	
-	private String checkDozenExceptions(int size, String check, String[] numberList, String adend){
+	private String checkDozenExceptions(int size, String check, String[] numberList, String addend){
 		String result;
 		if (check.equals("00")){
 			return "";
@@ -147,7 +147,7 @@ public class StringParser {
 				}
 			}
 		}
-		return result + adend;
+		return result + addend;
 	}
 	
 	private void populeUnitMap(Map<String, String> map){
