@@ -9,7 +9,7 @@ public class StringParser {
 	private Map<String, String> hundredMap;
 	private Map<String, String> exceptionMap;
 	private final String MILHOES = " milhões e ";
-	private final String MILHAO = " milhão e ";
+	private final String MILHAO = " um milhão e ";
 	private final String MIL = " mil e ";
 	
 	public StringParser(){
@@ -30,51 +30,11 @@ public class StringParser {
         if (size == 10){
         	result = "um bilhão";
         }
-        else if (size == 9){
-			String check = numberList[9] + numberList[8] + numberList[7];
-			result += checkHundredExceptions(size, check, numberList, MILHOES);
-			size = size - 3;
-			result = this.returnExtended(number, size, result);
+        else if (size == 9 || size == 8 || size == 7){
+			result = this.returnExtendedPart(size, number, numberList, result, MILHAO, MILHOES);
 		}
-		else if (size == 8){
-			String check = numberList[8] + numberList[7];
-			result += checkDozenExceptions(size, check, numberList, MILHOES);
-			size = size - 2;
-			result = this.returnExtended(number, size, result);
-		}
-		
-		else if (size == 7){
-			result += unitMap.get(numberList[size]);
-			if (numberList[7].equals("1")){
-				result += MILHAO;
-			}
-			else{
-				result += MILHOES;
-			}
-			size = size - 1;
-			result = this.returnExtended(number, size, result);
-		}
-		else if (size == 6) {
-			String check = numberList[6] + numberList[5] + numberList[4];
-			result += checkHundredExceptions(size, check, numberList, MIL);
-			size = size - 3;
-			result = this.returnExtended(number, size, result);
-		}
-		else if (size == 5){
-			String check = numberList[5] + numberList[4];
-			result += checkDozenExceptions(size, check, numberList, MIL);
-			size = size - 2;
-			result = this.returnExtended(number, size, result);
-		}
-		else if (size == 4){
-			if (numberList[size].equals("1")){
-				result += MIL;
-			}
-			else {
-				result += unitMap.get(numberList[size]) + MIL;
-			}
-			size = size - 1;
-			result = this.returnExtended(number, size, result);
+		else if (size == 6 || size == 5 || size == 4){
+			result = this.returnExtendedPart(size, number, numberList, result, MIL, MIL);
 		}
 		else if (size == 3){
 			String check = numberList[3] + numberList[2] + numberList[1];
@@ -97,6 +57,33 @@ public class StringParser {
 	public String result(int i){
 		String number = Integer.toString(i);
 		return this.returnExtended(number, number.length(), "");
+	}
+	
+	private String returnExtendedPart(int size, String number, String[] numberList, String result, String addend1, String addend2){
+		if (size % 3 == 0){
+			String check = numberList[size] + numberList[size - 1] + numberList[size - 2];
+			result += checkHundredExceptions(size, check, numberList, addend2);
+			size = size - 3;
+			result = this.returnExtended(number, size, result);
+		}
+		else if (size == 8 || size == 5 || size == 3){
+			String check = numberList[size] + numberList[size - 1];
+			result += checkDozenExceptions(size, check, numberList, addend2);
+			size = size - 2;
+			result = this.returnExtended(number, size, result);
+		}
+
+		else if (size == 7 || size == 4 || size == 1){
+			if (numberList[size].equals("1")){
+				result += addend1;
+			}
+			else{
+				result += unitMap.get(numberList[size]) + addend2;
+			}
+			size = size - 1;
+			result = this.returnExtended(number, size, result);
+		}
+		return result;
 	}
 	
 	private String checkExceptions(String number){
