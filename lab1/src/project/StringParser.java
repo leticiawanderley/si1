@@ -32,13 +32,13 @@ public class StringParser {
         }
         else if (size == 9){
 			String check = numberList[9] + numberList[8] + numberList[7];
-			result += checkHundredExceptions(size, check, numberList) + MILHOES;
+			result += checkHundredExceptions(size, check, numberList, MILHOES);
 			size = size - 3;
 			result = this.returnExtended(number, size, result);
 		}
 		else if (size == 8){
 			String check = numberList[8] + numberList[7];
-			result += checkDozenExceptions(size, check, numberList) + MILHOES;
+			result += checkDozenExceptions(size, check, numberList, MILHOES);
 			size = size - 2;
 			result = this.returnExtended(number, size, result);
 		}
@@ -56,13 +56,13 @@ public class StringParser {
 		}
 		else if (size == 6) {
 			String check = numberList[6] + numberList[5] + numberList[4];
-			result += checkHundredExceptions(size, check, numberList) + MIL;
+			result += checkHundredExceptions(size, check, numberList, MIL);
 			size = size - 3;
 			result = this.returnExtended(number, size, result);
 		}
 		else if (size == 5){
 			String check = numberList[5] + numberList[4];
-			result += checkDozenExceptions(size, check, numberList) + MIL;
+			result += checkDozenExceptions(size, check, numberList, MIL);
 			size = size - 2;
 			result = this.returnExtended(number, size, result);
 		}
@@ -78,11 +78,11 @@ public class StringParser {
 		}
 		else if (size == 3){
 			String check = numberList[3] + numberList[2] + numberList[1];
-			result += checkHundredExceptions(size, check, numberList);
+			result += checkHundredExceptions(size, check, numberList, "");
 		}
 		else if (size == 2){
 			String check = numberList[2] + numberList[1];
-			result += checkDozenExceptions(size, check, numberList);
+			result += checkDozenExceptions(size, check, numberList, "");
 		}
 		else if (size == 1){
 			result += unitMap.get(numberList[size--]);
@@ -106,28 +106,48 @@ public class StringParser {
 		return null;
 	}
 	
-	private String checkHundredExceptions(int size, String check, String[] numberList){
+	private String checkHundredExceptions(int size, String check, String[] numberList, String adend){
 		String result;
-		if (checkExceptions(check) != null){
+		if (check.equals("000")){
+			return "";
+		}
+		else if (checkExceptions(check) != null){
 			result = checkExceptions(check);
 		}
 		else {
-			result = hundredMap.get(numberList[size--]) + " e "
-					+ checkDozenExceptions(size, check.substring(1), numberList);			
+			if (check.substring(0, 1).equals("0")){
+				result = checkDozenExceptions(size--, check.substring(1), numberList, "");
+			}
+			else {
+				result = hundredMap.get(numberList[size--]);
+				if (! check.substring(1).equals("00")){
+					result += " e " + checkDozenExceptions(size, check.substring(1), numberList, "");	
+				}
+			}
 		}
-		return result;
+		return result + adend;
 	}
 	
-	private String checkDozenExceptions(int size, String check, String[] numberList){
+	private String checkDozenExceptions(int size, String check, String[] numberList, String adend){
 		String result;
-		if (checkExceptions(check) != null){
+		if (check.equals("00")){
+			return "";
+		}
+		else if (checkExceptions(check) != null){
 			result = checkExceptions(check);
 		}
-		else {				
-			result = dozenMap.get(numberList[size--]) + " e "
-					+ unitMap.get(numberList[size--]);
+		else {
+			if (check.substring(0, 1).equals("0")){
+				result = unitMap.get(numberList[size - 2]);
+			}
+			else {
+				result = dozenMap.get(numberList[size--]); 
+				if (! check.substring(1).equals("0")){
+					result += " e " + unitMap.get(numberList[size--]);	
+				}
+			}
 		}
-		return result;
+		return result + adend;
 	}
 	
 	private void populeUnitMap(Map<String, String> map){
@@ -170,7 +190,6 @@ public class StringParser {
 	}
 	
 	private void populeExceptionsMap(Map<String, String> map){
-		map.put("000", "");
 		map.put("001", "um");
 		map.put("002", "dois");
 		map.put("003", "três");
@@ -180,7 +199,6 @@ public class StringParser {
 		map.put("007", "sete");
 		map.put("008", "oito");
 		map.put("009", "nove");
-		map.put("00", "");
 		map.put("01", "um");
 		map.put("02", "dois");
 		map.put("03", "três");
