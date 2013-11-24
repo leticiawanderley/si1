@@ -16,6 +16,12 @@ public class Task extends Model{
   @Required
   public String label;
   
+  @Required
+  public String description;
+  
+  @Required
+  public int priority;
+  
   public static Finder<Long,Task> find = new Finder(
 	Long.class, Task.class);
   
@@ -45,5 +51,21 @@ public class Task extends Model{
   
   public void setLabel(String newLabel) {
 	  label = newLabel;
+  }
+  
+  public String getDescription() {
+	  return description;
+  }
+  
+  public void setDescription(String newDescription) {
+	  description = newDescription;
+  }
+  
+  public int getPriority() {
+	  return priority;
+  }
+  
+  public void setPriority(int newPriority) {
+	  priority = newPriority;
   }
 }
