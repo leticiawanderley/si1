@@ -2,13 +2,14 @@
 
 @import helper._
 
-@main("Todo list") {
+@main("Coisas a fazer") {
     <style type="text/css">
 		h1 {font-size:30px;text-align:left}
 		h2 {font-size:20px;}
 		p.helvetica{font-family:Arial, Helvetica, sans-serif; font-weight:normal;}
 	</style>
-    <h1><p class='helvetica'>@tasks.size() task(s)</p></h1>
+	
+    <h1><p class='helvetica'>@tasks.size() tarefa(s)</p></h1>
     
     <ul>
         @for(task <- tasks) {
@@ -23,11 +24,11 @@
         }
     </ul>
     
-    <h1><p class='helvetica'>Add a new task</p></h1>
+    <h1><p class='helvetica'>Adicionar nova tarefa</p></h1>
     
     @form(routes.Application.newTask()) {
         
-        <h2><p class="helvetica">@inputText(taskForm("Label"))</p></h2>
+        <h2><p class="helvetica">@inputText(taskForm("Tarefa:"))</p></h2>
         
         <input type="submit" value="Create">
         
