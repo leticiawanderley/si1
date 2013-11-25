@@ -3,20 +3,13 @@
 @import helper._
 
 @main("Coisas a fazer") {
-    <style type="text/css">
-		h1 {font-size:30px;font-family:Arial, Helvetica, sans-serif; font-weight:normal;}
-		h2 {font-size:20px;font-family:Arial, Helvetica, sans-serif; font-weight:normal;}
-		h3 {font-size:16px;font-family:Arial, Helvetica, sans-serif; font-weight:normal;}
-		h4 {font-size:14px;font-family:Arial, Helvetica, sans-serif; font-weight:normal;}
-		p.helvetica{font-family:Arial, Helvetica, sans-serif; font-weight:normal;}
-	</style>
 	<h1>@tasks.size() tarefa(s)</h1>
 	<table width="100%">
     	<tr>
 			<td> 
-    			<h2>Tarefas a fazer</h1>
+    			<h2>Tarefas a fazer</h2>
     	
-    			<table width="60%">
+    			<table id="not_done" width="60%">
 		    		<th>
     					<td><h3><b>Tarefa</b></h3></td> 
     					<td><h3><b>Descrição</b></h3></td> 
@@ -48,7 +41,7 @@
     		<td>
     			<h2>Tarefas feitas</h2>
     			
-    			<table width="60%">
+    			<table id="done" width="60%">
     				<th>
     					<td><h3><b>Tarefa</b></h3></td> 
     					<td><h3><b>Descrição</b></h3></td> 
@@ -73,12 +66,14 @@
     		</td>
     	</tr>
     </table>
-    <h1>Adicionar nova tarefa</h1>
+    <br>
+    <br>
+    <h2>Adicionar nova tarefa</h2>
     
     @form(routes.Application.newTask()) {
-        <h2>@inputText(taskForm("label"), '_label -> "Tarefa:")</h2>
-        <h2>@inputText(taskForm("description"), '_label -> "Descrição:")</h2>
-		<h2>@inputText(taskForm("priority"), '_label -> "Prioridade da tarefa:")</h2>        
+        <h4>@inputText(taskForm("label"), '_label -> "Tarefa:")</h4>
+        <h4>@inputText(taskForm("description"), '_label -> "Descrição:")</h4>
+		<h4>@inputText(taskForm("priority"), '_label -> "Prioridade da tarefa:")</h4>        
         <input type="submit" value="Adicionar">
     }    
 }
