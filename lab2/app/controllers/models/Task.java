@@ -26,7 +26,15 @@ public class Task extends Model{
 	Long.class, Task.class);
   
   public static List<Task> all() {
-	  return find.all();
+	  List<Task> bdList = find.all();
+	  Comparator<Task> comparador = new Comparator<Task>() {
+			@Override
+			public int compare(Task arg0, Task arg1) {
+				return arg0.getPriority() - arg1.getPriority();
+			}
+	  };
+	  Collections.sort(bdList, comparador);
+	  return bdList;
   }
 
   public static void create(Task task) {
