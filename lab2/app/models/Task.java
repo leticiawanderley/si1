@@ -22,6 +22,8 @@ public class Task extends Model{
   @Required
   public int priority;
   
+  public boolean done;
+  
   public static Finder<Long,Task> find = new Finder(
 	Long.class, Task.class);
   
@@ -43,7 +45,13 @@ public class Task extends Model{
 
   public static void delete(Long id) {
 	  find.ref(id).delete();
-  }    
+  }   
+  
+  public static void updateStatus(Long id) {
+	 Task task = (Task) find.ref(id);
+	 task.setDone(! task.isDone());
+	 task.update();
+  }
   
   public Long getId() {
 	  return id;
@@ -75,5 +83,13 @@ public class Task extends Model{
   
   public void setPriority(int newPriority) {
 	  priority = newPriority;
+  }
+  
+  public boolean isDone() {
+	  return done;
+  }
+  
+  public void setDone(boolean d) {
+	  done = d;
   }
 }
